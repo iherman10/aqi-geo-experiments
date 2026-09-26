@@ -218,6 +218,7 @@ def tbr_panels(m, unit, headline, name):
     for i, ax in enumerate(axs):
         pc.shade_period(ax, TEST_START, TEST_END, "Test window" if i == 2 else None)
         ax.set_ylabel(unit)
+    axs[-1].xaxis.get_offset_text().set_visible(False)  # year is in the subtitle
     pc.title(fig, headline, "Time-based regression, Queens vs. a Bronx-based counterfactual, "
                             "Feb 2024, 95% intervals")
     pc.note(fig, AQS_NOTE if m == "aqi" else SSD_NOTE)
@@ -250,6 +251,7 @@ for ax, unit in zip(axs, ["ED visits", "AQI", "Ratio"]):
     pc.reference_line(ax)
     pc.shade_period(ax, TEST_START, TEST_END, "Test window" if unit == "AQI" else None)
     ax.set_ylabel(unit)
+axs[-1].xaxis.get_offset_text().set_visible(False)  # year is in the subtitle
 
 r, lo, hi = final["ratio"], final["ratio"] - final["ratio_half"], final["ratio"] + final["ratio_half"]
 axs[2].annotate(f"{r:.2f} (95% CI {lo:.2f} to {hi:.2f})".replace("-", "−"), xy=(final.name, r), xytext=(-8, 18),
